@@ -7,8 +7,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - name: Intall pytest
-      run: pip install pytest
-    - name: test
-      run: pytest
+    - name: Test with pytest
+      run: |
+        pip install pytest
+        pytest
+
         
