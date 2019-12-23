@@ -9,4 +9,4 @@ But when it comes to finding the right person: "Your one true love", An esoteric
 People.
 
 The seeker will provide several yes/no question quiz.
-The spread of the quiz sheet will be done in an intelligent propagated manner until s match with the person.
+The spread of the quiz sheet will be done in an intelligent propagated manner until a match will be found with the person.
