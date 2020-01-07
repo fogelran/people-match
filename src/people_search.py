@@ -1,5 +1,5 @@
-class User:
-    pass
+from .user import User
+
 
 class PeopleSearch:
     def __init__(self):
