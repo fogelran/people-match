@@ -11,3 +11,5 @@ class PeopleSearch:
         else:
             raise ValueError("Name '{0}' already exist".format(name_id))
 
+    def get_user(self, name_id):
+        return self._users[name_id]
