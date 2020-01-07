@@ -4,6 +4,7 @@ class User:
 class PeopleSearch:
     def __init__(self):
         self._users = {}
+        self._questions = []
 
     def add_user(self, name_id):
         if name_id not in self._users:
@@ -13,3 +14,6 @@ class PeopleSearch:
 
     def get_user(self, name_id):
         return self._users[name_id]
+
+    def add_question(self, question):
+        self._questions.append(question)

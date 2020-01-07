@@ -33,3 +33,9 @@ def test_when_requesting_non_exist_user_then_throw():
     # assert
     with pytest.raises(KeyError):
         people_search.get_user(name_id="Jessie")
+
+
+def test_add_question():
+    people_search = PeopleSearch()
+    people_search.add_question(question="Do you like rainbows?")
+
