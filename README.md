@@ -10,3 +10,31 @@ People.
 
 The seeker will provide several yes/no question quiz.
 The spread of the quiz sheet will be done in an intelligent propagated manner until a match will be found with the person.
+
+## Features
+- Seeded matchmaking questions focused on partner discovery (e.g., pets, long‑term plans, outdoors).
+- In-memory PeopleSearch engine with support for creating users, answering questions, asking new ones, and finding best matches by yes/no criteria.
+- Simple Flask UI so anyone can answer questions, introduce their own, and search for compatible people.
+- Pytest suite that exercises the matching logic end-to-end.
+
+## Getting started
+### Prerequisites
+- Python 3.11+
+- pip
+
+### Install dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### Run the tests
+```bash
+pytest
+```
+
+### Launch the web UI
+```bash
+export FLASK_APP=src.app
+flask run --reload
+```
+Then open http://127.0.0.1:5000 to answer questions, add your own, and search for people who match your criteria.
