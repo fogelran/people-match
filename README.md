@@ -33,8 +33,11 @@ pytest
 ```
 
 ### Launch the web UI
+Run the Flask experience from the new UI package entrypoint:
 ```bash
-export FLASK_APP=src.app
+export FLASK_APP=src.ui.app
 flask run --reload
+# or
+python -m src.ui.app
 ```
 Then open http://127.0.0.1:5000 to answer questions, add your own, and search for people who match your criteria.
