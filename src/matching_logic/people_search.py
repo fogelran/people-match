@@ -34,11 +34,20 @@ class PeopleSearch:
 
     def answer_question(self, name: str, question: str, answer: bool) -> None:
         user = self.get_user(name)
+        user.clear_skip(question)
         self.question_service.record_answer(user, question, answer)
+
+    def skip_question(self, name: str, question: str) -> None:
+        user = self.get_user(name)
+        user.skip_question(question)
 
     def get_user_answers(self, name: str) -> Dict[str, bool]:
         user = self.get_user(name)
         return dict(user.answers)
+
+    def get_skipped_questions(self, name: str) -> set[str]:
+        user = self.get_user(name)
+        return set(user.skipped_questions)
 
     def get_questions(self) -> List[str]:
         return self.question_service.questions()

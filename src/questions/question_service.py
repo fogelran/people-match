@@ -34,11 +34,22 @@ class QuestionService:
         return list(self._questions.keys())
 
     def unanswered_questions_for_user(self, user: User) -> List[str]:
-        return [question for question in self._questions if question not in user.answers]
+        return [
+            question
+            for question in self._questions
+            if question not in user.answers and question not in user.skipped_questions
+        ]
 
     def next_question_for_user(self, user: User) -> str:
         unanswered = self.unanswered_questions_for_user(user)
-        return unanswered[0] if unanswered else ""
+        if unanswered:
+            return unanswered[0]
+
+        # If everything is skipped, surface the earliest skipped item to encourage completion.
+        for question in self._questions:
+            if question in user.skipped_questions and question not in user.answers:
+                return question
+        return ""
 
     def question_answered_status(self, user: User) -> Dict[str, bool]:
         return {question: (question in user.answers) for question in self._questions}
