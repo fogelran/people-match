@@ -6,308 +6,513 @@
     <title>People Match</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --ink: #0f172a;
-            --glass: rgba(255, 255, 255, 0.08);
-            --aqua: #2dd4bf;
-            --violet: #8b5cf6;
-            --midnight: #0b1021;
-            --card-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+            --bg: #050915;
+            --panel: rgba(255, 255, 255, 0.04);
+            --panel-strong: rgba(255, 255, 255, 0.08);
+            --cyan: #34e2e2;
+            --violet: #9b8cff;
+            --rose: #ff7edb;
+            --text: #e8edf7;
+            --muted: #aab3c8;
+            --border: rgba(255, 255, 255, 0.08);
+            --shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
         }
-        * { font-family: 'Manrope', system-ui, -apple-system, sans-serif; }
+        * { box-sizing: border-box; }
         body {
-            background: radial-gradient(circle at 20% 20%, rgba(139, 92, 246, 0.12), transparent 25%),
-                        radial-gradient(circle at 80% 0%, rgba(45, 212, 191, 0.18), transparent 25%),
-                        linear-gradient(135deg, #0b1021 0%, #0f172a 50%, #0b1021 100%);
-            color: #e2e8f0;
+            margin: 0;
+            font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+            background: radial-gradient(circle at 10% 10%, rgba(52, 226, 226, 0.12), transparent 35%),
+                        radial-gradient(circle at 80% 0%, rgba(155, 140, 255, 0.14), transparent 35%),
+                        linear-gradient(135deg, #060b18, #0b1226 50%, #060b18);
+            color: var(--text);
             min-height: 100vh;
         }
-        .glass-card {
-            background: var(--glass);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            box-shadow: var(--card-shadow);
+        .shell {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 32px 20px 80px;
+        }
+        h1, h2, h3, h4 {
+            margin: 0;
+            color: var(--text);
+        }
+        p { color: var(--muted); }
+        a { color: inherit; text-decoration: none; }
+        .glass {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            box-shadow: var(--shadow);
             backdrop-filter: blur(12px);
         }
         .hero {
-            border-radius: 28px;
-            background: linear-gradient(135deg, rgba(139, 92, 246, 0.35), rgba(45, 212, 191, 0.35));
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            box-shadow: 0 28px 70px rgba(0, 0, 0, 0.35);
+            padding: 28px;
+            margin-bottom: 18px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            background: linear-gradient(120deg, rgba(52, 226, 226, 0.16), rgba(155, 140, 255, 0.18), rgba(255, 126, 219, 0.1));
+            border: 1px solid rgba(255, 255, 255, 0.12);
         }
-        .tagline {
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-            color: rgba(226, 232, 240, 0.7);
-        }
-        .pill {
+        .eyebrow {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 10px 16px;
+            padding: 8px 14px;
             border-radius: 999px;
             background: rgba(255, 255, 255, 0.08);
             font-weight: 700;
-            color: #fff;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text);
         }
-        .pill .dot {
-            width: 12px;
-            height: 12px;
-            background: linear-gradient(135deg, var(--aqua), var(--violet));
+        .pulse {
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
-            box-shadow: 0 0 12px rgba(45, 212, 191, 0.7);
+            background: linear-gradient(135deg, var(--cyan), var(--violet));
+            box-shadow: 0 0 12px rgba(52, 226, 226, 0.8);
         }
-        .cta-btn {
-            background: linear-gradient(135deg, var(--aqua), var(--violet));
-            border: none;
-            color: #0b1021;
-            font-weight: 800;
-            padding: 12px 20px;
+        .stepper {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+        }
+        .step {
+            padding: 14px;
             border-radius: 14px;
-            box-shadow: 0 18px 38px rgba(45, 212, 191, 0.25);
+            border: 1px solid var(--border);
+            background: var(--panel);
+            display: flex;
+            gap: 12px;
+            align-items: center;
         }
-        .label {
+        .step-number {
+            width: 34px;
+            height: 34px;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--cyan), var(--violet));
+            color: #050915;
+            font-weight: 800;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 16px;
+        }
+        .card {
+            padding: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 6px;
+            color: var(--muted);
+            font-weight: 600;
+        }
+        input, textarea, select, button {
+            font-family: inherit;
+        }
+        .field {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: var(--panel-strong);
+            color: var(--text);
+        }
+        .field:focus {
+            outline: 2px solid rgba(52, 226, 226, 0.3);
+            border-color: rgba(52, 226, 226, 0.6);
+        }
+        .btn {
+            border: none;
+            border-radius: 12px;
+            padding: 12px 16px;
             font-weight: 700;
-            color: rgba(226, 232, 240, 0.8);
+            cursor: pointer;
+            color: #050915;
+            background: linear-gradient(135deg, var(--cyan), var(--violet));
+            transition: transform 120ms ease, box-shadow 120ms ease;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
         }
-        .input-soft {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            color: #e2e8f0;
+        .btn:hover { transform: translateY(-1px); }
+        .btn.secondary {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+            box-shadow: none;
         }
-        .input-soft:focus {
-            box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.25);
-            border-color: rgba(45, 212, 191, 0.6);
-        }
-        .chip {
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
             padding: 6px 10px;
-            background: rgba(255, 255, 255, 0.08);
             border-radius: 10px;
-            font-size: 0.9rem;
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text);
+            font-weight: 600;
         }
-        .badge-outline {
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            color: #e2e8f0;
-            background: rgba(255, 255, 255, 0.04);
+        .progress-track {
+            height: 10px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.08);
+            overflow: hidden;
+            border: 1px solid var(--border);
         }
-        .sticky-match {
-            position: sticky;
-            bottom: 16px;
-            z-index: 3;
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--cyan), var(--violet), var(--rose));
+        }
+        .pill-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .pill {
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text);
+            font-size: 0.95rem;
+        }
+        .muted { color: var(--muted); }
+        .question-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 10px;
+        }
+        .question-chip {
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: var(--panel);
+            color: var(--text);
+        }
+        .inline-form {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .answer-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .small-note { font-size: 0.9rem; color: var(--muted); }
+        .two-col {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 12px;
+        }
+        @media (max-width: 640px) {
+            .hero { padding: 20px; }
         }
     </style>
 </head>
-<body class="pb-5">
-<div class="container py-5">
-    <header class="hero p-4 p-md-5 mb-4">
-        <div class="row align-items-center g-4">
-            <div class="col-lg-8">
-                <div class="pill mb-3"><span class="dot"></span> New revolutionary way to search</div>
-                <h1 class="display-4 fw-bold mb-3 text-white">Welcome to the new, playful way to meet your match.</h1>
-                <p class="lead mb-4">Sign in once, drop your deal-breakers, and glide through a game-like flow that finds you the person who fits.</p>
-                <div class="d-flex flex-wrap gap-3 align-items-center">
-                    <div class="d-flex align-items-center gap-2">
-                        <span class="badge bg-success text-dark fw-bold px-3 py-2">Live</span>
-                        <span class="text-white-50">Real-time matching, evolving with every answer.</span>
-                    </div>
-                    <div class="d-flex align-items-center gap-2">
-                        <span class="badge bg-info text-dark fw-bold px-3 py-2">Adaptive</span>
-                        <span class="text-white-50">We surface questions you have not conquered yet.</span>
-                    </div>
+<body>
+<div class="shell">
+    <header class="hero glass">
+        <div class="eyebrow"><span class="pulse"></span> Playful matching steps</div>
+        <h1>Sign in, answer one beat at a time, craft your asks, meet your best match.</h1>
+        <p>Every step is a micro interaction. Glide through the flow like a mini-game and land on people who fit your answers.</p>
+        <div class="stepper">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div>
+                    <div class="muted">Sign in</div>
+                    <strong>Drop your name + vibe</strong>
                 </div>
             </div>
-            <div class="col-lg-4">
-                <div class="glass-card p-4 h-100">
-                    <div class="d-flex align-items-center justify-content-between mb-3">
-                        <span class="label">Sign in once</span>
-                        <span class="badge bg-primary">Step 0</span>
-                    </div>
-                    <form action="{{ url_for('register') }}" method="post" class="vstack gap-3">
-                        <div>
-                            <label class="label mb-2" for="register-name">Your name</label>
-                            <input type="text" id="register-name" name="user_name" class="form-control input-soft" placeholder="Skyler" required>
-                        </div>
-                        <div>
-                            <label class="label mb-2" for="register-photo">Profile image URL (optional)</label>
-                            <input type="url" id="register-photo" name="profile_image_url" class="form-control input-soft" placeholder="https://images.example/me.jpg">
-                        </div>
-                        <div>
-                            <label class="label mb-2" for="register-tagline">Tagline (optional)</label>
-                            <input type="text" id="register-tagline" name="tagline" class="form-control input-soft" placeholder="Ocean lover, chai enthusiast">
-                        </div>
-                        <button class="cta-btn w-100" type="submit">Enter the arena</button>
-                    </form>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div>
+                    <div class="muted">Answer</div>
+                    <strong>Yes / No / Skip</strong>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div>
+                    <div class="muted">Ask</div>
+                    <strong>Your own or pick</strong>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <div>
+                    <div class="muted">Match</div>
+                    <strong>See best partners</strong>
                 </div>
             </div>
         </div>
     </header>
 
-    {% if results is defined %}
-    <div class="alert alert-info glass-card border-0 text-white">
-        {% if results %}
-            <strong>Matches:</strong> {{ results | join(", ") }}
-        {% else %}
-            <strong>No matches yet.</strong> Try adjusting your filters.
-        {% endif %}
-    </div>
-    {% endif %}
-
-    {% if match_name is defined %}
-    <div class="alert alert-success glass-card border-0 text-white">
-        {% if match_name %}
-            <strong>Best match found!</strong> {{ match_name }} lines up with your preferences.
-        {% else %}
-            <strong>No perfect match yet.</strong> Add a few more preferences or wait for more answers.
-        {% endif %}
-    </div>
-    {% endif %}
-
-    <div class="row g-4 mb-4">
-        <div class="col-lg-4">
-            <div class="glass-card p-4 h-100">
-                <div class="d-flex align-items-center justify-content-between mb-3">
-                    <div>
-                        <div class="tagline mb-1">Game tile 1</div>
-                        <h2 class="h4 fw-bold text-white mb-0">Ask your question</h2>
-                    </div>
-                    <span class="badge badge-outline">Auto-stored</span>
-                </div>
-                <p class="text-white-50">Plant a yes/no question and the expected answer you want in a partner. Every new prompt instantly joins the question database.</p>
-                <form action="{{ url_for('ask_question') }}" method="post" class="vstack gap-3">
-                    <div>
-                        <label class="label mb-2" for="ask-name">Your name</label>
-                        <input type="text" id="ask-name" name="user_name" class="form-control input-soft" placeholder="Skyler" required>
-                    </div>
-                    <div>
-                        <label class="label mb-2" for="ask-question">Your yes/no question</label>
-                        <textarea id="ask-question" name="question_text" class="form-control input-soft" rows="2" placeholder="Do you like sunrise hikes?" required></textarea>
-                    </div>
-                    <div class="label mb-1">You want them to answer</div>
-                    <div class="d-flex gap-3">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="expected_answer" id="ask-expected-yes" value="yes" checked>
-                            <label class="form-check-label" for="ask-expected-yes">Yes</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="expected_answer" id="ask-expected-no" value="no">
-                            <label class="form-check-label" for="ask-expected-no">No</label>
-                        </div>
-                    </div>
-                    <button class="cta-btn w-100" type="submit">Save question</button>
-                </form>
+    <section id="step-1" class="glass card" style="margin-bottom: 14px;">
+        <div class="inline-form" style="justify-content: space-between;">
+            <div>
+                <h2>Step 1 · Sign in</h2>
+                <p class="muted">We only need a name to start. Add a photo and tagline to personalize the rest of the flow.</p>
             </div>
+            <a class="btn secondary" href="#step-2">Skip to next</a>
         </div>
+        <form action="{{ url_for('register') }}" method="post" class="grid" style="margin-top: 10px;">
+            <div>
+                <label for="register-name">Display name</label>
+                <input class="field" id="register-name" name="user_name" placeholder="Skyler Nova" required>
+            </div>
+            <div>
+                <label for="register-photo">Profile image URL</label>
+                <input class="field" id="register-photo" name="profile_image_url" type="url" placeholder="https://images.example/me.jpg">
+            </div>
+            <div>
+                <label for="register-tagline">Tagline or short bio</label>
+                <input class="field" id="register-tagline" name="tagline" placeholder="AI tinkerer · Night runner">
+            </div>
+            <div style="display: flex; align-items: flex-end;">
+                <button class="btn" type="submit">Continue to questions</button>
+            </div>
+        </form>
+    </section>
 
-        <div class="col-lg-4">
-            <div class="glass-card p-4 h-100">
-                <div class="d-flex align-items-center justify-content-between mb-3">
+    <section id="step-2" class="glass card" style="margin-bottom: 14px;">
+        <div class="inline-form" style="justify-content: space-between;">
+            <div>
+                <h2>Step 2 · Answer one by one</h2>
+                <p class="muted">We surface one unanswered prompt. Tap yes / no / skip to move forward.</p>
+            </div>
+            <a class="btn secondary" href="#step-3">Continue</a>
+        </div>
+        <form action="{{ url_for('index') }}" method="get" class="inline-form" style="margin-top: 12px;">
+            <label for="focus-user">Play as</label>
+            <input class="field" id="focus-user" name="focus_user" value="{{ focus_user or '' }}" placeholder="Your name">
+            <button class="btn secondary" type="submit">Load next question</button>
+        </form>
+
+        <div class="grid" style="margin-top: 14px;">
+            <div class="glass card">
+                <div class="inline-form" style="justify-content: space-between; align-items: center;">
                     <div>
-                        <div class="tagline mb-1">Game tile 2</div>
-                        <h2 class="h4 fw-bold text-white mb-0">Answer questions</h2>
+                        <div class="muted small-note">Next prompt</div>
+                        <h3>{{ suggested_question or "No open questions right now" }}</h3>
                     </div>
-                    <span class="badge badge-outline">Adaptive</span>
+                    <div class="badge">
+                        <span class="pulse"></span>
+                        <span>{{ answered_count }} / {{ total_questions }} answered</span>
+                    </div>
                 </div>
-                <p class="text-white-50">We surface a prompt you have not answered yet. If everything is done, we celebrate you for clearing the board.</p>
-                <form action="{{ url_for('index') }}" method="get" class="vstack gap-2 mb-3">
-                    <label class="label mb-1" for="focus-user">Enter your name</label>
-                    <div class="input-group">
-                        <input type="text" id="focus-user" name="focus_user" class="form-control input-soft" placeholder="Skyler" value="{{ focus_user or '' }}" required>
-                        <button class="btn btn-outline-info text-white" type="submit">Load my next challenge</button>
-                    </div>
-                </form>
-                {% if focus_user %}
-                    {% if suggested_question %}
-                        <div class="alert alert-success p-3">
-                            <strong>Next up:</strong> {{ suggested_question }}
-                        </div>
-                        <form action="{{ url_for('answer_question') }}" method="post" class="vstack gap-3">
+                <div class="progress-track" style="margin-top: 10px;">
+                    <div class="progress-bar" style="width: {{ progress_percent }}%;"></div>
+                </div>
+                {% if suggested_question %}
+                    <div class="answer-buttons" style="margin-top: 14px;">
+                        <form action="{{ url_for('answer_question') }}" method="post">
                             <input type="hidden" name="user_name" value="{{ focus_user }}">
                             <input type="hidden" name="question_text" value="{{ suggested_question }}">
-                            <div class="label">Your answer</div>
-                            <div class="d-flex gap-3 align-items-center">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="answer" id="answer-yes" value="yes" checked>
-                                    <label class="form-check-label" for="answer-yes">Yes</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="answer" id="answer-no" value="no">
-                                    <label class="form-check-label" for="answer-no">No</label>
-                                </div>
-                            </div>
-                            <button class="cta-btn w-100" type="submit">Submit answer</button>
+                            <input type="hidden" name="answer_action" value="yes">
+                            <button class="btn" type="submit">Yes</button>
                         </form>
-                    {% elif question_status %}
-                        <div class="alert alert-info p-3">{{ question_status }}</div>
-                    {% endif %}
+                        <form action="{{ url_for('answer_question') }}" method="post">
+                            <input type="hidden" name="user_name" value="{{ focus_user }}">
+                            <input type="hidden" name="question_text" value="{{ suggested_question }}">
+                            <input type="hidden" name="answer_action" value="no">
+                            <button class="btn" type="submit">No</button>
+                        </form>
+                        <form action="{{ url_for('answer_question') }}" method="post">
+                            <input type="hidden" name="user_name" value="{{ focus_user }}">
+                            <input type="hidden" name="question_text" value="{{ suggested_question }}">
+                            <input type="hidden" name="answer_action" value="skip">
+                            <button class="btn secondary" type="submit">Skip</button>
+                        </form>
+                    </div>
+                {% elif question_status %}
+                    <p class="small-note" style="margin-top: 12px;">{{ question_status }}</p>
                 {% else %}
-                    <div class="alert alert-secondary p-3">
-                        Share your name to see the next unanswered prompt.
+                    <p class="small-note" style="margin-top: 12px;">Sign in and load your name to start answering.</p>
+                {% endif %}
+
+                {% if answered_status %}
+                    <div style="margin-top: 16px;">
+                        <div class="muted small-note">Answered streak</div>
+                        <div class="pill-row">
+                            {% for question, answered in answered_status.items() %}
+                                <span class="pill">{{ "✓" if answered else "…" }} {{ question }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="glass card">
+                <div class="inline-form" style="justify-content: space-between;">
+                    <div>
+                        <div class="muted small-note">Skipped</div>
+                        <h4>{{ skipped_questions|length if skipped_questions is defined else 0 }} parked items</h4>
+                    </div>
+                    <div class="badge">{{ total_questions }} total prompts live</div>
+                </div>
+                <div class="question-grid" style="margin-top: 10px;">
+                    {% for question in skipped_questions or [] %}
+                        <div class="question-chip">
+                            <div class="muted small-note">Skipped</div>
+                            <div>{{ question }}</div>
+                        </div>
+                    {% endfor %}
+                    {% if (skipped_questions or [])|length == 0 %}
+                        <p class="small-note">No skips yet. You are on a roll!</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="step-3" class="glass card" style="margin-bottom: 14px;">
+        <div class="inline-form" style="justify-content: space-between;">
+            <div>
+                <h2>Step 3 · Ask or select</h2>
+                <p class="muted">Drop your own yes/no question or choose one from the library with the answer you prefer.</p>
+            </div>
+            <a class="btn secondary" href="#step-4">Continue</a>
+        </div>
+        <div class="two-col" style="margin-top: 12px;">
+            <form action="{{ url_for('ask_question') }}" method="post" class="glass card">
+                <div class="muted small-note">Custom card</div>
+                <h4>Create your own prompt</h4>
+                <input type="hidden" name="user_name" value="{{ focus_user or '' }}">
+                <label for="ask-question">Question text</label>
+                <textarea class="field" id="ask-question" name="question_text" rows="2" placeholder="Do you prefer sunrise runs?" required></textarea>
+                <div class="inline-form" style="margin-top: 10px;">
+                    <label style="margin: 0;">You want them to say</label>
+                    <label><input type="radio" name="expected_answer" value="yes" checked> Yes</label>
+                    <label><input type="radio" name="expected_answer" value="no"> No</label>
+                </div>
+                <button class="btn" type="submit" style="margin-top: 12px;">Save custom ask</button>
+            </form>
+
+            <form action="{{ url_for('ask_question') }}" method="post" class="glass card">
+                <div class="muted small-note">Library pick</div>
+                <h4>Select an existing question</h4>
+                <input type="hidden" name="user_name" value="{{ focus_user or '' }}">
+                <label for="library-question">Question</label>
+                <select class="field" id="library-question" name="question_text" required>
+                    <option value="" disabled selected>Select a question</option>
+                    {% for question in questions %}
+                        <option value="{{ question }}">{{ question }}</option>
+                    {% endfor %}
+                </select>
+                <div class="inline-form" style="margin-top: 10px;">
+                    <label style="margin: 0;">You want them to say</label>
+                    <label><input type="radio" name="expected_answer" value="yes" checked> Yes</label>
+                    <label><input type="radio" name="expected_answer" value="no"> No</label>
+                </div>
+                <button class="btn" type="submit" style="margin-top: 12px;">Add preference</button>
+            </form>
+        </div>
+        {% if user_preferences %}
+            <div style="margin-top: 14px;">
+                <div class="muted small-note">Your current asks</div>
+                <div class="question-grid">
+                    {% for question, expected in user_preferences.items() %}
+                        <div class="question-chip">
+                            <div class="muted small-note">{{ "Expecting yes" if expected else "Expecting no" }}</div>
+                            <div>{{ question }}</div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </section>
+
+    <section id="step-4" class="glass card">
+        <div class="inline-form" style="justify-content: space-between;">
+            <div>
+                <h2>Step 4 · See matches</h2>
+                <p class="muted">We compare your asks with everyone’s answers and surface the best-fit partners.</p>
+            </div>
+            <a class="btn secondary" href="#step-1">Restart flow</a>
+        </div>
+
+        <div class="grid" style="margin-top: 12px;">
+            <div class="glass card">
+                <div class="inline-form" style="justify-content: space-between; align-items: center;">
+                    <div>
+                        <div class="muted small-note">Instant best match</div>
+                        <h3>Who fits you best right now?</h3>
+                    </div>
+                    <div class="badge">Live matching</div>
+                </div>
+                <form action="{{ url_for('best_match') }}" method="post" class="inline-form" style="margin-top: 10px;">
+                    <input class="field" name="user_name" value="{{ focus_user or '' }}" placeholder="Your name" required>
+                    <button class="btn" type="submit">Compute</button>
+                </form>
+                {% if match_name is defined %}
+                    {% if match_name %}
+                        <p style="margin-top: 10px;">✨ <strong>{{ match_name }}</strong> lines up with your preferences.</p>
+                    {% else %}
+                        <p class="small-note" style="margin-top: 10px;">No perfect match yet — add or answer a few more questions.</p>
+                    {% endif %}
+                {% endif %}
+            </div>
+            <div class="glass card">
+                <div class="muted small-note">Quick filter</div>
+                <h4>Find people who say yes/no</h4>
+                <form action="{{ url_for('search') }}" method="post" class="grid" style="margin-top: 8px;">
+                    <input type="hidden" name="user_name" value="{{ focus_user or '' }}">
+                    <div>
+                        <label for="filter-question">Question</label>
+                        <select class="field" id="filter-question" name="question_1">
+                            {% for question in questions %}
+                                <option value="{{ question }}">{{ question }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div>
+                        <label for="filter-answer">Desired answer</label>
+                        <select class="field" id="filter-answer" name="answer_1">
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                    <div style="display: flex; align-items: flex-end;">
+                        <button class="btn" type="submit">Search</button>
+                    </div>
+                </form>
+                {% if results is defined %}
+                    <div style="margin-top: 10px;">
+                        {% if results %}
+                            <div class="muted small-note">Matches</div>
+                            <div class="pill-row">
+                                {% for person in results %}
+                                    <span class="pill">{{ person }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <p class="small-note">No matches for that filter yet.</p>
+                        {% endif %}
                     </div>
                 {% endif %}
             </div>
         </div>
 
-        <div class="col-lg-4">
-            <div class="glass-card p-4 h-100">
-                <div class="d-flex align-items-center justify-content-between mb-3">
-                    <div>
-                        <div class="tagline mb-1">Game tile 3</div>
-                        <h2 class="h4 fw-bold text-white mb-0">Question library</h2>
-                    </div>
-                    <span class="badge badge-outline">Live</span>
+        <div class="glass card" style="margin-top: 14px;">
+            <div class="inline-form" style="justify-content: space-between;">
+                <div>
+                    <div class="muted small-note">Live library</div>
+                    <h4>{{ questions|length }} questions in play</h4>
                 </div>
-                <p class="text-white-50">These are the active prompts in play. Every new question appears instantly for the community.</p>
-                <div class="d-flex flex-wrap gap-2">
-                    {% for question in questions %}
-                        <span class="chip">{{ question }}</span>
-                    {% endfor %}
-                </div>
-                <hr class="border-secondary">
-                <p class="text-white-50 small mb-1">Starter suggestion: people who like pets</p>
-                <div class="badge bg-dark text-white">{{ demo_matches | join(", ") if demo_matches else "No data yet" }}</div>
+                <div class="badge">{{ demo_matches | join(', ') if demo_matches else 'No demo matches yet' }}</div>
+            </div>
+            <div class="question-grid" style="margin-top: 10px;">
+                {% for question in questions %}
+                    <div class="question-chip">{{ question }}</div>
+                {% endfor %}
             </div>
         </div>
-    </div>
-
-    <div class="glass-card p-4 mb-5">
-        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
-            <div>
-                <div class="tagline mb-1">Call to action</div>
-                <h3 class="h4 text-white fw-bold mb-1">Find my match</h3>
-                <p class="text-white-50 mb-0">We crunch every answer you want to see and reveal the top fit available right now.</p>
-            </div>
-            <form action="{{ url_for('best_match') }}" method="post" class="d-flex flex-column flex-md-row gap-3 w-100 w-md-auto">
-                <input type="text" name="user_name" class="form-control input-soft" placeholder="Your name" value="{{ focus_user or '' }}" required>
-                <button class="cta-btn px-4" type="submit">Find my match</button>
-            </form>
-        </div>
-    </div>
-
-    <div class="sticky-match glass-card p-3">
-        <div class="d-flex align-items-center justify-content-between">
-            <div class="d-flex align-items-center gap-3">
-                <div class="pill mb-0"><span class="dot"></span> Playful trio</div>
-                <span class="text-white-50">Ask ➜ Answer ➜ Match — repeat until you win.</span>
-            </div>
-            <form action="{{ url_for('search') }}" method="post" class="d-none d-md-flex align-items-center gap-2">
-                <input type="hidden" name="user_name" value="{{ focus_user or '' }}">
-                <select class="form-select input-soft" name="question_1">
-                    <option value="">Find people who…</option>
-                    {% for question in questions %}
-                        <option value="{{ question }}">{{ question }}</option>
-                    {% endfor %}
-                </select>
-                <select class="form-select input-soft" name="answer_1">
-                    <option value="yes">say yes</option>
-                    <option value="no">say no</option>
-                </select>
-                <button class="btn btn-outline-light" type="submit">Quick filter</button>
-            </form>
-        </div>
-    </div>
+    </section>
 </div>
 </body>
 </html>

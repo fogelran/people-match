@@ -16,6 +16,30 @@ def _render_home(**extra_context: Dict[str, Any]):
         "questions": people_search.get_questions(),
         "demo_matches": people_search.search({"Do you like pets?": True}),
     }
+    focus_user = extra_context.get("focus_user", "")
+    total_questions = len(base_context["questions"])
+    answered_status: Dict[str, bool] = {}
+    skipped_questions = set()
+    answered_count = 0
+    if focus_user:
+        answered_status = people_search.get_questions_with_answered_status(focus_user)
+        answered_count = sum(1 for answered in answered_status.values() if answered)
+        skipped_questions = people_search.get_skipped_questions(focus_user)
+        base_context.update(
+            {
+                "user_answers": people_search.get_user_answers(focus_user),
+                "user_preferences": people_search.get_user_questions(focus_user),
+                "answered_status": answered_status,
+                "skipped_questions": skipped_questions,
+            }
+        )
+    base_context.update(
+        {
+            "answered_count": answered_count,
+            "total_questions": total_questions,
+            "progress_percent": int((answered_count / total_questions) * 100) if total_questions else 0,
+        }
+    )
     base_context.update(extra_context)
     return render_template("home.html", **base_context)
 
@@ -101,11 +125,15 @@ def ask_question():
 def answer_question():
     user_name = request.form.get("user_name", "").strip()
     question_text = request.form.get("question_text", "").strip()
-    answer = request.form.get("answer") == "yes"
+    action = request.form.get("answer_action", "yes")
+    answer = action == "yes"
 
     if user_name and question_text:
         people_search.register_user(user_name)
-        people_search.answer_question(user_name, question_text, answer)
+        if action == "skip":
+            people_search.skip_question(user_name, question_text)
+        else:
+            people_search.answer_question(user_name, question_text, answer)
     return redirect(url_for("index", focus_user=user_name))
 
 
